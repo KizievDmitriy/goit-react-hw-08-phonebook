@@ -27,6 +27,7 @@ export const InputForm = styled.input`
 
 export const SubmitBtn = styled.button`
   text-transform: uppercase;
+  font-size: 16px;
   padding: 6px 20px;
   border-radius: 4px;
   border: none;

@@ -10,6 +10,7 @@ export const ItemContact = styled.li`
 export const DeleteBtn = styled.button`
   margin-left: auto;
   text-transform: uppercase;
+  font-size: 14px;
   padding: 6px 20px;
   border-radius: 4px;
   border: none;
