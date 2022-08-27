@@ -1,101 +1,96 @@
-import { useState } from 'react';
-import {
-  useGetContactsQuery,
-  useAddContactMutation,
-} from 'redux/contactsAPI';
-import Notiflix from 'notiflix';
-import BeatLoader from "react-spinners/BeatLoader";
-import {
-  FormContacts,
-  LabelForm,
-  SubmitBtn,
-  TitleForm,
-  InputForm,
-} from './ContactForm.styled';
+//Material UI
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import CssBaseline from '@mui/material/CssBaseline';
+//Local import
+import { useAddContact } from 'hooks/useAddContact';
+import { Spinner } from 'components/Spinner/Spinner';
 
 export const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const { data: contacts } = useGetContactsQuery();
-  const [addContact, { isLoading, error }] = useAddContactMutation();
- 
+  const {
+    name,
+    phone,
+    handleAddContact,
+    handleChangeName,
+    handleChangePhone,
+    isLoading,
+    nameError,
+    phoneError,
+  } = useAddContact();
 
-  const handleSubmit =async e => {
-    e.preventDefault();
+  return (
+    <>
+      <Typography
+        component="h1"
+        variant="h4"
+        sx={{
+          textAlign: 'center',
+          marginBottom: 2,
+          letterSpacing: 2,
+          color: 'Highlight',
+        }}
+      >
+        Phonebook
+      </Typography>
 
-    const isAdded = contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase() || contact.number === number );
-      if (isAdded) {
-        return Notiflix.Notify.warning(`${name} is already in contacts `);  
-      }
-    try {
-      await addContact({name, number,});
-    Notiflix.Notify.success(`Contact ${name} is created!`);
-      reset();
-    } catch {
-      Notiflix.Notify.error(`${JSON.stringify(error.data)}`);
-      console.log(error);
-    }  
-  };
+      <Box
+        sx={{
+          padding: 4,
+          bgcolor: '#fff',
+          borderRadius: 4,
 
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+          '&:hover': { boxShadow: '0px 0px 42px -20px rgba(0,0,0,0.3)' },
+        }}
+      >
+        <CssBaseline />
+        <Box component="form" noValidate onSubmit={handleAddContact} sx={{}}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                error={nameError}
+                type="text"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                name="name"
+                variant="standard"
+                onChange={handleChangeName}
+                value={name}
+              />
+            </Grid>
 
-  const handleChange = e => {
-    const { name, value } = e.currentTarget;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
+            <Grid item xs={12}>
+              <TextField
+                type="tel"
+                error={phoneError}
+                required
+                fullWidth
+                id="number"
+                label="Phone"
+                name="number"
+                variant="standard"
+                onChange={handleChangePhone}
+                value={phone}
+                onKeyPress={e => !/[0-9]/.test(e.key) && e.preventDefault()}
+              />
+            </Grid>
+          </Grid>
 
-      case 'number':
-        setNumber(value);
-        break;
-      default:
-        return;
-    }
-  };
-
-    return (
-      <>
-        <FormContacts onSubmit={handleSubmit}>
-          <LabelForm>
-            <TitleForm>Name</TitleForm>
-            <InputForm
-              type="text"
-              name="name"
-              value={name}
-              placeholder="Enter Name"
-              onChange={handleChange}
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-            />
-          </LabelForm>
-          <LabelForm>
-            <TitleForm>Number</TitleForm>
-            <InputForm
-              type="tel"
-              name="number"
-              value={number}
-              onChange={handleChange}
-              placeholder="Enter Phone Number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-            />
-          </LabelForm>
-          <SubmitBtn type="submit" disabled={isLoading}>
-            {isLoading ?
-              <BeatLoader
-              color="#ffffff"
-              margin={5}
-              size={9}
-              /> : 'Add contact'}
-          </SubmitBtn>
-        </FormContacts>
-      </>
-    );
-  
-}
+          <Button
+            type="submit"
+            disabled={name.length < 3}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3 }}
+          >
+            Add contact {isLoading && <Spinner size={20} />}
+          </Button>
+        </Box>
+      </Box>
+    </>
+  );
+};
