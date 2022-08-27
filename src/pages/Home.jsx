@@ -35,12 +35,12 @@ const Home = () => {
       
       <Typography
         component="h1"
-        variant="h3"
+        variant="h1"
         sx={{
-          fontSize: `${matches ? '60px' : '48px'}`,
+          fontSize: `${matches ? '90px' : '48px'}`,
           textAlign: 'center',
-          marginBottom: 3,
-          color: '#fff',
+          marginBottom: 5,
+          color: '#ffffff',
         }}
       >
         Welcome to PhoneBook!
