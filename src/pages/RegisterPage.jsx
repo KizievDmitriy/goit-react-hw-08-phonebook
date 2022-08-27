@@ -21,29 +21,30 @@ const RegisterPage = () => {
   
   const handleSubitRegistration = e => {
     e.preventDefault();
-    
     const data = new FormData(e.currentTarget);
     const newUser = {
       name: normalizedName(data.get('name')),
       email: data.get('email').trim(),
       password: data.get('password'),
     };
+    
+    
 
     if (newUser.name === '' || newUser.password === '' || newUser.email === '')
     {
       return Notiflix.Notify.warning('One of the fields is empty');
     }
-    // if (!newUser.email.includes('@')) {
-    //   Notiflix.Notify.warning('Please enter valid email');
-    //   return false;
-    // }
+    if (!newUser.email.includes('@')) {
+      Notiflix.Notify.warning('Please enter valid email');
+      return false;
+    }
 
     registration(newUser);
   };
 
     useEffect(() => {
             if (isError) {
-              Notiflix.Notify.error('Something was wrong.');
+              Notiflix.Notify.failure('Something was wrong.');
             }
           }, [isError]);
 
