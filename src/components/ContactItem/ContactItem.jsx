@@ -17,7 +17,10 @@ const ContactItem = ({ contact: { id, name, number } }) => {
   const navigate = useNavigate();
   const [deleteContact, { isLoading: isLoadingDelete, isSuccess }] =
     useDeleteContactMutation();
-  // console.log(JSON.parse( number ));
+  // console.log(JSON.parse(JSON.stringify(number)));
+  const parsedNumber = JSON.parse(JSON.stringify(number));
+
+
   useEffect(() => {
     return () => {
       if (isSuccess) {
@@ -40,7 +43,7 @@ const ContactItem = ({ contact: { id, name, number } }) => {
         <Typography component="p" variant="span" sx={{ width: '45%', fontWeight: '500', color: '#7a7a7a' }}>
           {name.toUpperCase()}
         </Typography>
-        <Link href={"tel:+"+JSON.parse( number ) } underline="hover" sx={{ textAlign: 'left', fontWeight: '500', color: '#7a7a7a'}}>
+        <Link href={"tel:+" + parsedNumber} underline="hover" sx={{ textAlign: 'left', fontWeight: '500', color: '#7a7a7a'}}>
           {number}
         </Link>
         
