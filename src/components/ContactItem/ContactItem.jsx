@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Notiflix from 'notiflix';
 //Material UI
 import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -35,13 +36,12 @@ const ContactItem = ({ contact: { id, name, number } }) => {
           alignItems: 'center',
         }}
       >
-        <Typography component="p" variant="span" sx={{ width: '45%', fontWeight: '700' }}>
+        <Typography component="p" variant="span" sx={{ width: '45%', fontWeight: '500', color: '#7a7a7a' }}>
           {name.toUpperCase()}
         </Typography>
-
-        <Typography component="p" variant="span" sx={{ textAlign: 'left', fontWeight: '500'}}>
+        <Link href={"tel:+" + { number }} underline="hover" sx={{ textAlign: 'left', fontWeight: '500', color: '#7a7a7a'}}>
           {number}
-        </Typography>
+        </Link>
 
         <IconButton
           aria-label="edit"
