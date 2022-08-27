@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Notiflix from 'notiflix';
 //Material UI
 import Box from '@mui/material/Box';
 //Local import
@@ -27,6 +28,14 @@ const ContactList = () => {
     refetch();
   }, [refetch]);
 
+   useEffect(() => {
+    if (isError) {
+      Notiflix.Notify.failure('Something was wrong!Reload page, please');
+    }
+  }, [isError]);
+
+  
+
   return (
     <Box
       component="ul"
@@ -49,8 +58,6 @@ const ContactList = () => {
           )}
         </>
       )}
-
-      {isError && <li>Ups, something was wrong! Reload page, please</li>}
     </Box>
   );
 };

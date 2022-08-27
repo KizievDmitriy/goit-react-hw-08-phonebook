@@ -70,7 +70,7 @@ export const useEditContactModal = () => {
 
   useEffect(() => {
     if (isError) {
-      Notiflix.Notify.error(`Ups! Something was wrong`);
+      Notiflix.Notify.error(`Something was wrong`);
     }
   }, [isError]);
 

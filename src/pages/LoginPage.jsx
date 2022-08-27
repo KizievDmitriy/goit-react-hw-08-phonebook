@@ -36,7 +36,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isError) {
-      Notiflix.Notify.error('Ups! Login or password is invalid');
+      Notiflix.Notify.failure('Login or password is invalid');
     }
   }, [isError]);
 
