@@ -20,8 +20,14 @@ private collections of contacts.
 - **Redux Toolkit**
 - **RTK Query**
 
+## Main Page
+
 ![Main page](./assets/main.png)
 
+## Registration Page
+
 ![Registration](./assets/reg.png)
+
+## Contacts page
 
 ![Contacts page](./assets/contact.png)
